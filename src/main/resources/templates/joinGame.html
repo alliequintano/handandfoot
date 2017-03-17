@@ -5,12 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-Welcome
+<p>Welcome <span th:text="${user.name}"></span></p>
 
-<form action="#" th:action="@{/joinGame}" th:object="${user}" method="post">
-
-    <input type="text" th:field="*{name}" />
-    <button type="submit">Join Game</button>
-</form>
 </body>
 </html>

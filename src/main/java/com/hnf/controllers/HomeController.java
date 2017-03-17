@@ -15,9 +15,15 @@ public class HomeController {
     User user;
 
     @ModelAttribute("user")
-    @RequestMapping(value = {"/home","/hello", "/welcome"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/home"}, method = RequestMethod.GET)
     public User home(){
         user = new User("");
+        return user;
+    }
+
+    @ModelAttribute("user")
+    @RequestMapping(value = {"/joinGame"}, method = RequestMethod.POST)
+    public User join(User user) {
         return user;
     }
 
