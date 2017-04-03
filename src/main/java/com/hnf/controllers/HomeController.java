@@ -1,17 +1,21 @@
 package com.hnf.controllers;
 
 import com.hnf.models.User;
+import com.hnf.store.Store;
+import com.sun.deploy.net.HttpResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
-/**
- * Created by alexandraquintano on 3/9/17.
- */
 @Controller
-//@RequestMapping(value = "/home")
 public class HomeController {
+    @Autowired
+    private Store userStore;
+
     User user;
 
     @ModelAttribute("user")
@@ -23,8 +27,16 @@ public class HomeController {
 
     @ModelAttribute("user")
     @RequestMapping(value = {"/joinGame"}, method = RequestMethod.POST)
-    public User join(User user) {
-        return user;
+    public ModelAndView join(User user) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("user", user);
+        userStore.saveUser(user);
+        if (userStore.getUserCount() == 3) {
+            modelAndView.setViewName("joinGame");
+            return modelAndView;
+        }
+        modelAndView.setViewName("waitingRoom");
+        return modelAndView;
     }
 
 }
